@@ -4,57 +4,262 @@
   <meta charset="UTF-8">
   <title>Kezdőlap</title>
   <style>
-    body {
-      margin: 0;
-      background: #f0f0f0;
-      font-family: sans-serif;
+	body {
+	  margin: 0;
+	  background: #f0f0f0;
+	  font-family: sans-serif;
+	}
+	.hero {
+	  height: 70vh; /* fixen egy képernyőnyi magasság */
+	  display: flex;
+	  flex-direction: column;
+	  align-items: center;
+	  justify-content: center;
+	}
+	
+	main {
+	  display: flex;
+	  flex-direction: column;
+	  align-items: center;
+	  justify-content: center;
+	  margin-top: -60px;
+}
+
+/* Logó */
+.logo img {
+  height: 70px;
+  margin-bottom: 40px;
+}
+
+
+	input[type="text"] {
+	  padding: 10px 10px 10px 40px;
+	  width: 700px;
+	  height: 30px;
+	  font-size: 16px;
+	  border: none;
+	  background-color: #42414D;
+	  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+	  border-radius: 8px;
+	  outline: none;
+	  transition: box-shadow 0.3s ease;
+	  background-image: url('https://www.google.com/favicon.ico');
+	  background-repeat: no-repeat;
+	  background-position: 10px center;
+	  background-size: 20px 20px;
+	  color: #AEAEAE;
+	}
+    input[type="text"]:focus {
+      box-shadow: 0 0 8px rgba(30, 144, 255, 0.7);
+	  color: #AEAEAE;
+    }
+    .tiles {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 60px;
+      max-width: 1000px;
+	  margin-top: 20px;
+    }
+
+    .tile {
+      width: 80px;
+      height: 80px;
+      background: white;
+      border-radius: 16px;
+	  background-color: #42414D;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 100vh;
-    }
-    .search-box {
-      margin-bottom: 30px;
-    }
-    input[type="text"] {
-      padding: 10px;
-      width: 800px;
-	  height: 150px;
-      font-size: 16px;
-    }
-    .tiles {
-      display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    .tile {
-      background: white;
-      padding: 20px;
-      border-radius: 8px;
+      transition: transform 0.2s;
       text-align: center;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      width: 150px;
     }
+    .tile:hover {
+      transform: scale(1.05);
+    }
+
     .tile a {
       text-decoration: none;
-      color: #333;
+      color: black;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+	  margin-top: 40px;
     }
+
+    .tile img {
+      width: 32px;
+      height: 32px;
+      margin-bottom: 8px;
+    }
+
+    .tile span {
+      font-size: 14px;
+	  margin-top: 20px;
+    }
+	
+	#reddit-box {
+	  max-width: 800px;
+	  width: 100%;
+	  background: white;
+	  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+	  padding: 20px;
+	  border-radius: 8px;
+	  font-family: sans-serif;
+	  display: flex;
+	  flex-direction: column;
+	  gap: 12px;
+	}
+
+	#reddit-box h3 {
+	  font-size: 18px;
+	  margin: 0;
+	}
+
+	#reddit-box h3 a {
+	  color: black;
+	  text-decoration: none;
+	}
+
+	#reddit-box img,
+	#reddit-box video {
+	  max-width: 100%;
+	  max-height: 400px;
+	  border-radius: 6px;
+	  object-fit: contain;
+	}
+
+	#reddit-box .meta {
+	  font-size: 14px;
+	  color: #666;
+	}
   </style>
 </head>
 <body>
-  <div class="search-box">
-    <form action="https://www.google.com/search" method="GET">
-      <input type="text" name="q" placeholder="Keresés a Google-on...">
-    </form>
+  <section class="hero">
+    <div class="logo">
+      <img src="C:\newtab\betaweb.png" alt="Logo">
+    </div>
+    <div class="search-box">
+      <form action="https://www.google.com/search" method="GET">
+        <input type="text" name="q" placeholder="Keresés a Google-ben...">
+      </form>
+    </div>
+	  <div class="tiles">
+    <div class="tile" data-url="https://www.facebook.com">
+      <a href="https://www.facebook.com">
+        <img>
+        <span>Facebook</span>
+      </a>
+    </div>
+    <div class="tile" data-url="https://www.youtube.com">
+      <a href="https://www.youtube.com">
+        <img>
+        <span>YouTube</span>
+      </a>
+    </div>
+    <div class="tile" data-url="https://index.hu">
+      <a href="https://index.hu">
+        <img>
+        <span>Index</span>
+      </a>
+    </div>
+    <div class="tile" data-url="https://www.telex.hu">
+      <a href="https://www.telex.hu">
+        <img>
+        <span>Telex</span>
+      </a>
+    </div>
   </div>
+    </section>
+	
+	<main>
+    <div id="reddit-box" style="
+  width: 400px;
+  margin-top: 40px;
+  background: white;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  padding: 20px;
+  border-radius: 8px;
+  text-align: left;
+  font-family: sans-serif;
+">
+  <em>Reddit tartalom betöltése...</em>
+</div>
+	</main>
+  <!-- Csempék ikonokkal -->
 
-  <div class="tiles">
-    <div class="tile"><a href="https://www.facebook.com">Facebook</a></div>
-    <div class="tile"><a href="https://www.youtube.com">YouTube</a></div>
-    <div class="tile"><a href="https://index.hu">Index</a></div>
-    <div class="tile"><a href="https://www.gmail.com">Gmail</a></div>
-  </div>
+  <script>
+    document.querySelectorAll('.tile').forEach(tile => {
+      const url = tile.getAttribute('data-url');
+      const domain = new URL(url).hostname;
+      const faviconUrl = `https://www.google.com/s2/favicons?sz=64&domain=${domain}`;
+      tile.querySelector('img').src = faviconUrl;
+      tile.querySelector('img').alt = domain;
+    });
+	
+  const subreddit = "Censoredforbetas"; // módosítható
+
+  fetch(`https://www.reddit.com/r/${subreddit}/top.json?limit=1&t=day`)
+    .then(res => res.json())
+    .then(data => {
+      const post = data.data.children[0].data;
+      const container = document.getElementById("reddit-box");
+
+      const title = post.title;
+      const permalink = `https://reddit.com${post.permalink}`;
+      const ups = post.ups;
+      const comments = post.num_comments;
+
+      let mediaHtml = "";
+
+      // 1. Teljes videó (pl. videós poszt)
+      if (post.is_video && post.media?.reddit_video?.fallback_url) {
+        const videoUrl = post.media.reddit_video.fallback_url;
+        mediaHtml = `
+          <video controls autoplay muted loop playsinline>
+            <source src="${videoUrl}" type="video/mp4">
+            A videót nem sikerült betölteni.
+          </video>
+        `;
+      }
+
+      // 2. "GIF formátumú" MP4 videó, preview-ből (reddit_video_preview)
+      else if (post.preview?.reddit_video_preview?.fallback_url) {
+        const gifVideoUrl = post.preview.reddit_video_preview.fallback_url;
+        mediaHtml = `
+          <video autoplay muted loop playsinline>
+            <source src="${gifVideoUrl}" type="video/mp4">
+            A videót nem sikerült betölteni.
+          </video>
+        `;
+      }
+
+      // 3. Valódi GIF link (ritka)
+      else if (post.url?.endsWith(".gif")) {
+        mediaHtml = `<img src="${post.url}" alt="GIF">`;
+      }
+
+      // 4. Statikus kép
+      else if (post.preview?.images?.[0]) {
+        const imageUrl = post.preview.images[0].source.url.replace(/&amp;/g, '&');
+        mediaHtml = `<img src="${imageUrl}" alt="Kép">`;
+      }
+
+      container.innerHTML = `
+        <h3><a href="${permalink}" target="_blank">${title}</a></h3>
+        ${mediaHtml}
+        <div class="meta">
+          👍 ${ups} | 💬 ${comments} | 🔗 <strong>r/${subreddit}</strong>
+        </div>
+      `;
+    })
+    .catch(err => {
+      document.getElementById("reddit-box").innerHTML = "<p>Hiba történt a Reddit poszt betöltésekor.</p>";
+      console.error(err);
+    });
+  </script>
 </body>
 </html>
