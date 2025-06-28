@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <title>Kezdőlap</title>
+  <style>
+    body {
+      margin: 0;
+      background: #f0f0f0;
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    .search-box {
+      margin-bottom: 30px;
+    }
+    input[type="text"] {
+      padding: 10px;
+      width: 800px;
+	  height: 150px;
+      font-size: 16px;
+    }
+    .tiles {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .tile {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      width: 150px;
+    }
+    .tile a {
+      text-decoration: none;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div class="search-box">
+    <form action="https://www.google.com/search" method="GET">
+      <input type="text" name="q" placeholder="Keresés a Google-on...">
+    </form>
+  </div>
+
+  <div class="tiles">
+    <div class="tile"><a href="https://www.facebook.com">Facebook</a></div>
+    <div class="tile"><a href="https://www.youtube.com">YouTube</a></div>
+    <div class="tile"><a href="https://index.hu">Index</a></div>
+    <div class="tile"><a href="https://www.gmail.com">Gmail</a></div>
+  </div>
+</body>
+</html>
