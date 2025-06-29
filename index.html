@@ -233,7 +233,12 @@
   font-family: sans-serif;
 ">
   <em>Reddit tartalom betöltése...</em>
+
 </div>
+
+<h1>Utolsó Discord üzenet</h1>
+  <p id="text">Betöltés...</p>
+  <img id="image" src="" alt="Discord kép" style="max-width: 400px;">
 
 	</main>
   <!-- Csempék ikonokkal -->
@@ -347,6 +352,18 @@ if (post.is_gallery && post.media_metadata && post.gallery_data?.items) {
       document.getElementById("reddit-box").innerHTML = "<p>Hiba történt a Reddit poszt betöltésekor.</p>";
       console.error(err);
     });
+
+        fetch("data.json")
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("text").innerText = data.text;
+        document.getElementById("image").src = data.image;
+      })
+      .catch(err => {
+        document.getElementById("text").innerText = "❌ Hiba a betöltéskor.";
+        console.error(err);
+      });
+
   </script>
 </body>
 </html>
