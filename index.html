@@ -306,7 +306,7 @@ fetch("data.json")
   .then(res => res.json())
   .then(data => {
     const img = document.createElement("img");
-    img.src = data.url;
+    img.src = data.image; // ← helyes kulcs
     img.alt = data.filename || "Discord kép";
     img.style.maxWidth = "100%";
     document.getElementById("discord-image").innerHTML = "";
