@@ -22,7 +22,7 @@
 	  flex-direction: column;
 	  align-items: center;
 	  justify-content: center;
-	  margin-top: -60px;
+	  margin-top: -90px;
 }
 
 /* Logó */
@@ -30,6 +30,52 @@
   height: 70px;
   margin-bottom: 40px;
 }
+
+ #popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Popup ablak stílusa */
+  #popup {
+
+    background: white;
+    padding: 30px 40px;
+    border-radius: 10px;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  }
+
+  #popup button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+
+  #popup button {
+    margin-top: 20px;
+    padding: 10px 25px;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    background-color: #0078d7;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  #popup button:not(:disabled):hover {
+    background-color: #005ea0;
+  }
+  
+  
 
 
 	input[type="text"] {
@@ -181,13 +227,14 @@
   margin-top: 40px;
   background: white;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  padding: 20px;
+
   border-radius: 8px;
   text-align: left;
   font-family: sans-serif;
 ">
   <em>Reddit tartalom betöltése...</em>
 </div>
+
 	</main>
   <!-- Csempék ikonokkal -->
 
@@ -215,8 +262,47 @@
 
       let mediaHtml = "";
 
-      // 1. Teljes videó (pl. videós poszt)
-      if (post.is_video && post.media?.reddit_video?.fallback_url) {
+      // Galériás poszt (több kép)
+if (post.is_gallery && post.media_metadata && post.gallery_data?.items) {
+  const galleryItems = post.gallery_data.items.map(item => {
+    const media = post.media_metadata[item.media_id];
+    if (media?.s?.u) {
+      return media.s.u.replace(/&amp;/g, '&');
+    }
+    return null;
+  }).filter(Boolean); // kiszűri a null értékeket
+
+  mediaHtml = `
+    <div id="gallery-container">
+      <img id="gallery-image" src="${galleryItems[0]}" alt="Galéria kép" style="max-width: 100%; max-height: 400px; border-radius: 6px;" />
+      <div style="margin-top: 10px; text-align: center;">
+        <button id="prev-btn">⬅ Előző</button>
+        <button id="next-btn">Következő ➡</button>
+      </div>
+    </div>
+  `;
+
+  // A gombokhoz tartozó logikát késleltetve adjuk hozzá
+  setTimeout(() => {
+    let currentIndex = 0;
+    const imgElement = document.getElementById("gallery-image");
+    const prevBtn = document.getElementById("prev-btn");
+    const nextBtn = document.getElementById("next-btn");
+
+    prevBtn.addEventListener("click", () => {
+      currentIndex = (currentIndex - 1 + galleryItems.length) % galleryItems.length;
+      imgElement.src = galleryItems[currentIndex];
+    });
+
+    nextBtn.addEventListener("click", () => {
+      currentIndex = (currentIndex + 1) % galleryItems.length;
+      imgElement.src = galleryItems[currentIndex];
+    });
+  }, 0);
+}
+
+      // Videós poszt
+      else if (post.is_video && post.media?.reddit_video?.fallback_url) {
         const videoUrl = post.media.reddit_video.fallback_url;
         mediaHtml = `
           <video controls autoplay muted loop playsinline>
@@ -226,7 +312,7 @@
         `;
       }
 
-      // 2. "GIF formátumú" MP4 videó, preview-ből (reddit_video_preview)
+      // GIF-szerű videó
       else if (post.preview?.reddit_video_preview?.fallback_url) {
         const gifVideoUrl = post.preview.reddit_video_preview.fallback_url;
         mediaHtml = `
@@ -237,17 +323,18 @@
         `;
       }
 
-      // 3. Valódi GIF link (ritka)
+      // Valódi GIF
       else if (post.url?.endsWith(".gif")) {
         mediaHtml = `<img src="${post.url}" alt="GIF">`;
       }
 
-      // 4. Statikus kép
+      // Statikus kép
       else if (post.preview?.images?.[0]) {
         const imageUrl = post.preview.images[0].source.url.replace(/&amp;/g, '&');
         mediaHtml = `<img src="${imageUrl}" alt="Kép">`;
       }
 
+      // HTML beillesztés
       container.innerHTML = `
         <h3><a href="${permalink}" target="_blank">${title}</a></h3>
         ${mediaHtml}
