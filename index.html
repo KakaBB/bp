@@ -186,7 +186,9 @@
 
 </div>
 
-  <div><img id="image" src="" alt="Discord kép" style="max-width: 400px;">  </div>
+  <div id="discord-image">
+  <img id="image" src="" alt="Discord kép" style="max-width: 400px; display: none;">
+</div>
 
 
 	</main>
@@ -305,12 +307,9 @@ if (post.is_gallery && post.media_metadata && post.gallery_data?.items) {
 fetch("data.json")
   .then(res => res.json())
   .then(data => {
-    const img = document.createElement("img");
-    img.src = data.image; // ← helyes kulcs
-    img.alt = data.filename || "Discord kép";
-    img.style.maxWidth = "100%";
-    document.getElementById("discord-image").innerHTML = "";
-    document.getElementById("discord-image").appendChild(img);
+    const img = document.getElementById("image");
+    img.src = data.image;
+    img.style.display = "block";
   })
   .catch(err => {
     document.getElementById("discord-image").innerText = "❌ Hiba a betöltéskor.";
