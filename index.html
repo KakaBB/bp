@@ -199,20 +199,25 @@
       tile.querySelector('img').alt = domain;
     });
 	
-  const subreddit = "Censoredforbetas"; // módosítható
+const subreddit = "Censoredforbetas";
 
-  fetch("https://api.allorigins.win/raw?url=https://www.reddit.com/r/Censoredforbetas/top.json?limit=1")
-    .then(res => res.json())
-    .then(data => {
-      const post = data.data.children[0].data;
-      const container = document.getElementById("reddit-box");
-
-      const title = post.title;
-      const permalink = `https://reddit.com${post.permalink}`;
-      const ups = post.ups;
-      const comments = post.num_comments;
-
-      let mediaHtml = "";
+fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(`https://www.reddit.com/r/${subreddit}/top.json?limit=1&t=day`)}`)
+  .then(res => {
+    if (!res.ok) throw new Error("Hiba a proxy lekérés során");
+    return res.json();
+  })
+  .then(data => {
+    const post = data.data.children[0].data;
+    const title = post.title;
+    const url = `https://reddit.com${post.permalink}`;
+    const imageUrl = post.preview?.images?.[0]?.source?.url.replace(/&amp;/g, '&') || "";
+    console.log("Cím:", title);
+    console.log("Kép URL:", imageUrl);
+    // Itt jöhet a HTML-be illesztés...
+  })
+  .catch(err => {
+    console.error("Hiba történt:", err);
+  });
 
       // Galériás poszt (több kép)
 if (post.is_gallery && post.media_metadata && post.gallery_data?.items) {
