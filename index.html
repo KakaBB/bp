@@ -186,7 +186,7 @@
 
 </div>
 
-<div id="discord-box" style="
+<div id="discord-image" style="
 <h1>Utolsó Discord üzenet</h1>
   <p id="text">Betöltés...</p>
   <img id="image" src="" alt="Discord kép" style="max-width: 400px;">
@@ -305,16 +305,20 @@ if (post.is_gallery && post.media_metadata && post.gallery_data?.items) {
       console.error(err);
     });
 
-        fetch("data.json")
-      .then(res => res.json())
-      .then(data => {
-        document.getElementById("text").innerText = data.text;
-        document.getElementById("image").src = data.image;
-      })
-      .catch(err => {
-        document.getElementById("text").innerText = "❌ Hiba a betöltéskor.";
-        console.error(err);
-      });
+  fetch("data.json")
+    .then(res => res.json())
+    .then(data => {
+      const img = document.createElement("img");
+      img.src = data.url;
+      img.alt = data.filename || "Discord kép";
+      img.style.maxWidth = "100%";
+      document.getElementById("discord-image").innerHTML = "";
+      document.getElementById("discord-image").appendChild(img);
+    })
+    .catch(err => {
+      document.getElementById("discord-image").innerText = "❌ Hiba a betöltéskor.";
+      console.error(err);
+    });
 
   </script>
 </body>
